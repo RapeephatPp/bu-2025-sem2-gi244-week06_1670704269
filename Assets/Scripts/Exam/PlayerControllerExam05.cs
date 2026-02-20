@@ -6,7 +6,7 @@ public class PlayerControllerExam05 : MonoBehaviour
     public float speed;
     public float xRange = 10;
     public GameObject projectilePrefab;
-    public float timer;
+    float timer;
 
 
     // Exam 05 ...
@@ -38,15 +38,15 @@ public class PlayerControllerExam05 : MonoBehaviour
         {
             transform.position = new Vector3(xRange, transform.position.y, transform.position.z);
         }
-
+        
         if (shootAction.triggered && maxBulletCount > 0)
         {
-            Instantiate(projectilePrefab, transform.position, transform.rotation);
-            maxBulletCount--;
-            Debug.Log("maxBulletCount: " +  maxBulletCount);
+            Shoot();
+        }
+        
             if (maxBulletCount <= 0)
             {
-                timer += bulletRegenerateCooldown;
+                timer += Time.deltaTime;
                 if (timer >= bulletRegenerateCooldown)
                 {
                     maxBulletCount = 10;
@@ -55,6 +55,12 @@ public class PlayerControllerExam05 : MonoBehaviour
                 }
             }
             
+        
+        void Shoot()
+        {
+            Instantiate(projectilePrefab, transform.position, transform.rotation);
+            maxBulletCount--;
+            Debug.Log("Bullets left: " + maxBulletCount);
         }
     }
 }
